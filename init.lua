@@ -912,3 +912,15 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 -- ~/.config/nvim/lua/config/keymaps.lua
+local function get_conda_python()
+  if vim.fn.exists '$CONDA_PREFIX' == 1 then
+    return vim.fn.getenv 'CONDA_PREFIX' .. '/bin/python'
+  else
+    return nil
+  end
+end
+
+local python_path = get_conda_python()
+if python_path then
+  vim.g.python3_host_prog = python_path
+end
